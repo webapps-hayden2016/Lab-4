@@ -10,6 +10,8 @@ namespace Lab_4.Controllers
     {
         public IActionResult Index()
         {
+            DateTime current = DateTime.Now;
+            ViewData["dateTime"] = current.DayOfWeek;
             return View();
         }
 

@@ -59,5 +59,11 @@ namespace Lab_4.Controllers
             ViewData["title"] = "Person Info";
             return View();
         }
+
+        [HttpPost]
+        public IActionResult PersonInfo(Person person)
+        {
+            return View(person);
+        }
     }
 }

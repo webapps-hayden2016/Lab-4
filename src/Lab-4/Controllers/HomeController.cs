@@ -16,7 +16,7 @@ namespace Lab_4.Controllers
                 ViewData["ToD"] = "Morning";
                 ViewData["AMPM"] = "am";
             }
-            else if (current.Hour >= 6) {
+            else if (current.Hour >= 18) {
                 ViewData["ToD"] = "Evening";
                 ViewData["AMPM"] = "pm";
             }
@@ -28,8 +28,7 @@ namespace Lab_4.Controllers
             ViewData["Day"] = current.DayOfWeek;
             ViewData["Month"] = current.ToString("MMMM");
             ViewData["Date"] = current.Day;
-            ViewData["Hour"] = current.Hour;
-            ViewData["Minute"] = current.Minute;
+            ViewData["Time"] = current.ToString("hh:mm");
             ViewData["Year"] = current.Year;
             return View();
         }
@@ -58,7 +57,7 @@ namespace Lab_4.Controllers
             Person person = new Person("John", "Johnson", new DateTime(1965, 10, 21), 51);
 
             ViewData["title"] = "Person Info";
-            return View(person);
+            return View();
         }
     }
 }

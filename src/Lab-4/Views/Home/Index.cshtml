@@ -3,6 +3,6 @@
 }
 
 <div class="jumbotron">
-    <h1>Good Afternoon!</h1>
+    <h1>Good @ViewData["ToD"]!</h1>
 </div>
-<h3>The time is @ViewData["dateTime"]</h3>
+<h3>The time is @ViewData["Hour"]:@ViewData["Minute"]@ViewData["AMPM"] on @ViewData["Day"], @ViewData["Month"] @ViewData["Date"], @ViewData["Year"]</h3>

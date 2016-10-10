@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Lab_4.Models;
 
 namespace Lab_4.Controllers
 {
@@ -11,7 +12,25 @@ namespace Lab_4.Controllers
         public IActionResult Index()
         {
             DateTime current = DateTime.Now;
-            ViewData["dateTime"] = current.DayOfWeek;
+            if (current.Hour < 12) {
+                ViewData["ToD"] = "Morning";
+                ViewData["AMPM"] = "am";
+            }
+            else if (current.Hour >= 6) {
+                ViewData["ToD"] = "Evening";
+                ViewData["AMPM"] = "pm";
+            }
+            else
+            {
+                ViewData["ToD"] = "Afternoon";
+                ViewData["AMPM"] = "pm";
+            }
+            ViewData["Day"] = current.DayOfWeek;
+            ViewData["Month"] = current.ToString("MMMM");
+            ViewData["Date"] = current.Day;
+            ViewData["Hour"] = current.Hour;
+            ViewData["Minute"] = current.Minute;
+            ViewData["Year"] = current.Year;
             return View();
         }
 
@@ -32,6 +51,14 @@ namespace Lab_4.Controllers
         public IActionResult Error()
         {
             return View();
+        }
+
+        public IActionResult PersonInfo()
+        {
+            Person person = new Person("John", "Johnson", new DateTime(1965, 10, 21), 51);
+
+            ViewData["title"] = "Person Info";
+            return View(person);
         }
     }
 }

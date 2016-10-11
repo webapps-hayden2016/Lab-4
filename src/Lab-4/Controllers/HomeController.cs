@@ -9,6 +9,8 @@ namespace Lab_4.Controllers
 {
     public class HomeController : Controller
     {
+        static PersonRepo people = new PersonRepo();
+
         public IActionResult Index()
         {
             DateTime current = DateTime.Now;
@@ -25,12 +27,18 @@ namespace Lab_4.Controllers
                 ViewData["ToD"] = "Afternoon";
                 ViewData["AMPM"] = "pm";
             }
+
+            if (DateTime.IsLeapYear(current.Year) == true)
+                ViewData["Days Left"] = 366 - current.DayOfYear;
+            else
+                ViewData["Days Left"] = 365 - current.DayOfYear;
             ViewData["Day"] = current.DayOfWeek;
             ViewData["Month"] = current.ToString("MMMM");
             ViewData["Date"] = current.Day;
             ViewData["Time"] = current.ToString("hh:mm");
             ViewData["Year"] = current.Year;
-            return View();
+            ViewData["Next Year"] = current.AddYears(1).Year;
+            return View(people);
         }
 
         public IActionResult About()
@@ -54,15 +62,22 @@ namespace Lab_4.Controllers
 
         public IActionResult PersonInfo()
         {
-            Person person = new Person("John", "Johnson", new DateTime(1965, 10, 21), 51);
-
-            ViewData["title"] = "Person Info";
+            ViewData["Heading"] = "Enter the Person information.";
             return View();
         }
 
         [HttpPost]
         public IActionResult PersonInfo(Person person)
         {
+            if (ModelState.IsValid)
+            {
+                if (DateTime.Today.Month < person.BirthDate.Month)
+                    person.Age = (DateTime.Today.Year - person.BirthDate.Year) - 1;
+                else
+                    person.Age = DateTime.Today.Year - person.BirthDate.Year;
+                people.PersonList.Add(person);
+                return RedirectToAction("Index");
+            }
             return View(person);
         }
     }

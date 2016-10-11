@@ -1,8 +1,32 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@model Lab_4.Models.PersonRepo
 
 <div class="jumbotron">
     <h1>Good @ViewData["ToD"]!</h1>
 </div>
 <h3>The time is @ViewData["Time"]@ViewData["AMPM"] on @ViewData["Day"], @ViewData["Month"] @ViewData["Date"], @ViewData["Year"]</h3>
+<h3>@ViewData["Days Left"] more days until @ViewData["Next Year"]!</h3>
+<br />
+<br />
+<h2>The People are:</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Birth Date</th>
+            <th>Age</th>
+        </tr>
+    </thead>
+    @foreach (var item in Model.PersonList)
+    {
+        <tr>
+            <td>@item.FirstName</td>
+            <td>@item.LastName</td>
+            <td>@item.BirthDate.ToString("MM/dd/yyyy")</td>
+            <td>@item.Age</td>
+        </tr>
+    }
+</table>
+<div>
+    <a asp-action="PersonInfo" class="btn btn-info">Add Another</a>
+</div>
